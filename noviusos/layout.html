@@ -28,18 +28,30 @@
             </select>
         </li>
 
-        {%- if pagename != "search" %}
-        <li class="right">
-            <div id="searchbox" style="display: none">
-                <form class="search" action="{{ pathto('search') }}" method="get">
-                    <input type="text" name="q" placeholder="{{ _('Enter search terms or a module, class or function name.') }}"/>
-                    <input type="submit" value="{{ _('Go') }}" />
-                    <input type="hidden" name="check_keywords" value="yes" />
-                    <input type="hidden" name="area" value="default" />
-                </form>
-            </div>
-            <script type="text/javascript">$('#searchbox').show(0);</script>
-        </li>
+        {% if on_rtd %}
+            <li class="right">
+                <div id="searchbox">
+                    <form class="search" action="//{{ PRODUCTION_DOMAIN }}/search/project/" method="get">
+                        <input type="text" name="q" placeholder="{{ _('Search') }}">
+                        <input type="submit" value="Go">
+                        <input type="hidden" name="selected_facets" value="project_exact:{{ name }}">
+                    </form>
+                </div>
+            </li>
+        {%- else %}
+            {%- if pagename != "search" %}
+            <li class="right">
+                <div id="searchbox" style="display: none">
+                    <form class="search" action="{{ pathto('search') }}" method="get">
+                        <input type="text" name="q" placeholder="{{ _('Enter search terms or a module, class or function name.') }}"/>
+                        <input type="submit" value="{{ _('Go') }}" />
+                        <input type="hidden" name="check_keywords" value="yes" />
+                        <input type="hidden" name="area" value="default" />
+                    </form>
+                </div>
+                <script type="text/javascript">$('#searchbox').show(0);</script>
+            </li>
+            {%- endif %}
         {%- endif %}
 
         {%- for rellink in rellinks %}
