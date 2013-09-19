@@ -148,7 +148,7 @@
         };
     </script>
     {%- if not versions %}
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     {%- endif %}
 
     {%- if use_opensearch %}
@@ -271,10 +271,15 @@
         jQuery(window).trigger('scroll');
     }
 </script>
-<script type="text/javascript" src="//www.novius-os.org/static/commonbar/header_external.min.js"></script>
+<script type="text/javascript" src="http://www.novius-os.org/static/commonbar/header_external.min.js"></script>
 <script type="text/javascript">
     NoviusOSCommonBar({
-        lang: 'en'
+        lang: '{{ theme_commonbar_lang }}'
+        {%- if theme_commonbar_switch %}
+        ,flags: {
+            {{ theme_commonbar_switch }} : "{{ theme_commonbar_switch_url }}"
+        }
+        {%- endif %}
     });
 </script>
 </body>
