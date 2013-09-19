@@ -122,7 +122,6 @@
 {%- endif %}
 {%- endmacro %}
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset={{ encoding }}" />
@@ -148,7 +147,9 @@
             HAS_SOURCE:  {{ has_source|lower }}
         };
     </script>
+    {%- if not on_rtd %}
     <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    {%- endif %}
 
     {%- if use_opensearch %}
     <link rel="search" type="application/opensearchdescription+xml"
