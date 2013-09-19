@@ -49,7 +49,7 @@
                         <input type="hidden" name="area" value="default" />
                     </form>
                 </div>
-                <script type="text/javascript">$('#searchbox').show(0);</script>
+                <script type="text/javascript">jQuery('#searchbox').show(0);</script>
             </li>
             {%- endif %}
         {%- endif %}
@@ -237,7 +237,7 @@
         // Back 2 top
         init_back2top();
 
-        $('.related select').change(function() {
+        jQuery('.related select').change(function() {
             document.location.href = $(this).find(':selected').val();
         });
     });
