@@ -1,168 +1,69 @@
-{%- block doctype -%}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{%- endblock %}
-{%- set reldelim2 = reldelim2 is not defined and ' |' or reldelim2 %}
+{# TEMPLATE VAR SETTINGS #}
 {%- set url_root = pathto('', 1) %}
 {%- if url_root == '#' %}{% set url_root = '' %}{% endif %}
 {%- if not embedded and docstitle %}
-{%- set titlesuffix = " &mdash; "|safe + project + ' ' + docstitle|e %}
+{%- set titlesuffix = " &mdash; "|safe + docstitle|e %}
 {%- else %}
 {%- set titlesuffix = "" %}
 {%- endif %}
 
-{%- macro relbar() %}
-<div class="related">
-    <ul>
-        <li class="noviusos"><a href="{{ pathto(master_doc) }}">{{ docstitle|e }}</a></li>
-
-        <li>
-            <select>
-                {% if versions %}
-                    {% for slug, url in versions %}
-                    <option value="{{ url }}">{{ slug }}</option>
-                    {% endfor %}
-                {% else %}
-                    <option value="">{{ version }}</option>
-                {% endif %}
-            </select>
-        </li>
-
-        {% if versions %}
-            <li class="right">
-                <div id="searchbox">
-                    <form class="search" action="//{{ PRODUCTION_DOMAIN }}/search/project/" method="get">
-                        <input type="text" name="q" placeholder="{{ _('Search') }}">
-                        <input type="submit" value="Go">
-                        <input type="hidden" name="selected_facets" value="project_exact:{{ name }}">
-                    </form>
-                </div>
-            </li>
-        {%- else %}
-            {%- if pagename != "search" %}
-            <li class="right">
-                <div id="searchbox" style="display: none">
-                    <form class="search" action="{{ pathto('search') }}" method="get">
-                        <input type="text" name="q" placeholder="{{ _('Enter search terms or a module, class or function name.') }}"/>
-                        <input type="submit" value="{{ _('Go') }}" />
-                        <input type="hidden" name="check_keywords" value="yes" />
-                        <input type="hidden" name="area" value="default" />
-                    </form>
-                </div>
-                <script type="text/javascript">jQuery('#searchbox').show(0);</script>
-            </li>
-            {%- endif %}
-        {%- endif %}
-
-        {%- for rellink in rellinks %}
-        {%- if rellink[3] != _('next') and rellink[3] != _('previous') %}
-        <li class="right" {% if loop.first %}style="margin-right: 10px"{% endif %}>
-        <a href="{{ pathto(rellink[0]) }}" title="{{ rellink[1]|striptags|e }}" {{ accesskey(rellink[2]) }}>{{ rellink[3] }}</a>
-        {{ reldelim2 }}</li>
-        {%- endif %}
-        {%- endfor %}
-    </ul>
-</div>
-{%- endmacro %}
-
-{%- macro navbar() %}
-<div class="nav">
-    {%- if prev %}
-    <a href="{{ prev.link|e }}"
-       title="{{ _('previous chapter') }}" class="nav_prev">{{ prev.title }}</a>
-    {%- endif %}
-    {%- if next %}
-    <a href="{{ next.link|e }}"
-       title="{{ _('next chapter') }}" class="nav_next">{{ next.title }}</a>
-    {%- endif %}
-    <div></div>
-</div>
-{%- endmacro %}
-
-{%- macro sidebar() %}
-{%- if not embedded %}
-<div class="sphinxsidebar">
-    <div class="sphinxsidebarwrapper">
-        {%- block sidebarlogo %}
-        {%- if logo %}
-        <p class="logo"><a href="{{ pathto(master_doc) }}">
-            <img class="logo" src="{{ pathto('_static/' + logo, 1) }}" alt="Logo"/>
-        </a></p>
-        {%- endif %}
-        {%- endblock %}
-
-        <ul class="rail">
-            {%- for parent in parents %}
-            <li><a href="{{ parent.link|e }}" {% if loop.last %}{{ accesskey("U") }}{% endif %}>{{ parent.title }}</a></li>
-            {%- endfor %}
-        </ul>
-
-        {%- if display_toc %}
-        <h3><a href="{{ pathto(master_doc) }}">{{ _('Table Of Contents') }}</a></h3>
-        {{ toc }}
-        {%- endif %}
-
-        {% if show_source and has_source and sourcename or display_github %}
-        <h3>{{ _('This Page') }}</h3>
-        <ul class="this-page-menu">
-            {% if show_source and has_source and sourcename %}
-            <li><a href="{{ pathto('_sources/' + sourcename, true)|e }}"
-                   rel="nofollow">{{ _('Show Source') }}</a></li>
-            {% endif %}
-            {% if display_github %}
-            <li><a href="https://github.com/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">
-                Show on GitHub</a></li>
-            <li><a href="https://github.com/{{ github_user }}/{{ github_repo }}/edit/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">
-                Edit on GitHub</a></li>
-            {% endif %}
-        </ul>
-        {% endif %}
-    </div>
-</div>
-{%- endif %}
-{%- endmacro %}
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset={{ encoding }}" />
-    {{ metatags }}
-    {%- block htmltitle %}
+
+  {% block htmltitle %}
     <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
-    {%- endblock %}
+  {% endblock %}
 
-    <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
-    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
-    {%- for cssfile in css_files %}
-    <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
-    {%- endfor %}
-    <link rel="stylesheet" href="http://www.novius-os.org/static/commonbar/header_external.min.css" type="text/css" />
+  {# FAVICON #}
+  {% if favicon %}
+    <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}"/>
+  {% endif %}
 
-    {%- if not embedded %}
+  {# JS #}
+  {% if not embedded %}
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:    '{{ url_root }}',
-            VERSION:     '{{ release|e }}',
-            COLLAPSE_INDEX: false,
-            FILE_SUFFIX: '{{ '' if no_search_suffix else file_suffix }}',
+            URL_ROOT:'{{ url_root }}',
+            VERSION:'{{ release|e }}',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'{{ '' if no_search_suffix else file_suffix }}',
             HAS_SOURCE:  {{ has_source|lower }}
         };
     </script>
+    {%- for scriptfile in script_files %}
+    <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+    {%- endfor %}
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $19 = $.noConflict(true);
+    </script>
 
-    {%- if use_opensearch %}
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}"
-          href="{{ pathto('_static/opensearch.xml', 1) }}"/>
-    {%- endif %}
-    {%- if favicon %}
-    <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}"/>
-    {%- endif %}
-    {%- if theme_canonical_url %}
+    {% if use_opensearch %}
+    <link rel="search" type="application/opensearchdescription+xml" title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}" href="{{ pathto('_static/opensearch.xml', 1) }}"/>
+    {% endif %}
+
+  {% endif %}
+
+  {# RTD hosts these file themselves, so just load on non RTD builds #}
+  {% if not READTHEDOCS %}
+    <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+    <script type="text/javascript" src="{{ pathto('_static/js/theme.js', 1) }}"></script>
+  {% endif %}
+
+  {% for cssfile in css_files %}
+    <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
+  {% endfor %}
+    <link rel="stylesheet" href="http://www.novius-os.org/static/commonbar/header_external.min.css" type="text/css" />
+
+  {%- if theme_canonical_url %}
     <link rel="canonical" href="{{ theme_canonical_url }}{{ pagename }}.html"/>
-    {%- endif %}
-    {%- endif %}
-    {%- block linktags %}
+  {%- endif %}
+
+  {%- block linktags %}
     {%- if hasdoc('about') %}
     <link rel="author" title="{{ _('About these documents') }}" href="{{ pathto('about') }}" />
     {%- endif %}
@@ -185,94 +86,42 @@
     {%- if prev %}
     <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />
     {%- endif %}
-    {%- endblock %}
-    {%- block extrahead %} {% endblock %}
+  {%- endblock %}
+  {%- block extrahead %} {% endblock %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
 </head>
 <body>
 {%- block header %}{% endblock %}
 
-{%- block relbar1 %}{{ relbar() }}{% endblock %}
-
-{%- block content %}
-{%- block sidebar1 %} {# possible location for sidebar #} {% endblock %}
+{% include "header.html" %}
 
 <div class="document">
     {%- block document %}
     <div class="documentwrapper">
         <div class="bodywrapper">
-            {{ navbar() }}
+            {% include "navbar.html" %}
             <div class="body">
                 {% block body %} {% endblock %}
             </div>
-            {{ navbar() }}
+            {% include "navbar.html" %}
         </div>
     </div>
     {%- endblock %}
 
-    {%- block sidebar2 %}{{ sidebar() }}{% endblock %}
+    {% include "sidebar.html" %}
     <div class="clearer"></div>
 </div>
-{%- endblock %}
 
-{%- block relbar2 %}{{ relbar() }}{% endblock %}
+{% include "header.html" %}
 
-{%- block footer %}
-<div class="footer">
-    {%- if show_copyright %}
-    {%- if hasdoc('copyright') %}
-    {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
-    {%- else %}
-    {% trans copyright=copyright|e %}&copy; Copyright {{ copyright }}.{% endtrans %}
-    {%- endif %}
-    {%- endif %}
-    {%- if last_updated %}
-    {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
-    {%- endif %}
-    {%- if show_sphinx %}
-    {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
-    {%- endif %}
-</div>
-{%- endblock %}
+{% if READTHEDOCS %}
+  {% include "footer.html" %}
+  {% include "versions.html" %}
+{% endif %}
 
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        // Back 2 top
-        init_back2top();
-
-        jQuery('.related select').change(function() {
-            document.location.href = $(this).find(':selected').val();
-        });
-    });
-    function init_back2top() {
-        var $back2top = jQuery('<div><div></div></div>').css({
-                opacity     : 0
-            }).bind('click', function() {
-                jQuery('html, body').animate({
-                    scrollTop: 0
-                }, 400);
-            }).addClass('back2top').hide();
-
-        jQuery('body').append($back2top);
-
-        jQuery(window).bind('scroll', function() {
-
-            // offset bottom de la page
-            var v_bottom = jQuery(document).scrollTop() + jQuery(window).height();
-
-            // offset bottom du menu
-            var m_bottom = jQuery('.sphinxsidebar').offset().top + jQuery('.sphinxsidebar').height();
-
-            if (v_bottom - m_bottom > 200 + $back2top.height()) {
-                // Affiche
-                $back2top.stop().show().fadeTo(200, 1);
-            } else {
-                // Cache
-                $back2top.stop().fadeTo(200, 0).hide();
-            }
-        });
-        jQuery(window).trigger('scroll');
-    }
-</script>
+<script type="text/javascript" src="{{ pathto('_static/backtotop.js', 1) }}"></script>
 <script type="text/javascript" src="http://www.novius-os.org/static/commonbar/header_external.min.js"></script>
 <script type="text/javascript">
     NoviusOSCommonBar({
@@ -282,7 +131,7 @@
             {{ theme_commonbar_switch }} : "{{ theme_commonbar_switch_url }}"
         }
         {%- endif %}
-    });
+    }, $19);
 </script>
 </body>
 </html>

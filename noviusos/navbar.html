@@ -1,0 +1,11 @@
+<div class="nav">
+    {%- if prev %}
+    <a href="{{ prev.link|e }}"
+       title="{{ _('previous chapter') }}" class="nav_prev">{{ prev.title }}</a>
+    {%- endif %}
+    {%- if next %}
+    <a href="{{ next.link|e }}"
+       title="{{ _('next chapter') }}" class="nav_next">{{ next.title }}</a>
+    {%- endif %}
+    <div></div>
+</div>

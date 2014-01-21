@@ -1,0 +1,40 @@
+{%- if not embedded %}
+<div class="sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+        {%- block sidebarlogo %}
+        {%- if logo %}
+        <p class="logo"><a href="{{ pathto(master_doc) }}">
+            <img class="logo" src="{{ pathto('_static/' + logo, 1) }}" alt="Logo"/>
+        </a></p>
+        {%- endif %}
+        {%- endblock %}
+
+        <ul class="rail">
+            {%- for parent in parents %}
+            <li><a href="{{ parent.link|e }}" {% if loop.last %}{{ accesskey("U") }}{% endif %}>{{ parent.title }}</a></li>
+            {%- endfor %}
+        </ul>
+
+        {%- if display_toc %}
+        <h3><a href="{{ pathto(master_doc) }}">{{ _('Table Of Contents') }}</a></h3>
+        {{ toc }}
+        {%- endif %}
+
+        {% if show_source and has_source and sourcename or display_github %}
+        <h3>{{ _('This Page') }}</h3>
+        <ul class="this-page-menu">
+            {% if show_source and has_source and sourcename %}
+            <li><a href="{{ pathto('_sources/' + sourcename, true)|e }}"
+                   rel="nofollow">{{ _('Show Source') }}</a></li>
+            {% endif %}
+            {% if display_github %}
+            <li><a href="https://github.com/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">
+                Show on GitHub</a></li>
+            <li><a href="https://github.com/{{ github_user }}/{{ github_repo }}/edit/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">
+                Edit on GitHub</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{%- endif %}
