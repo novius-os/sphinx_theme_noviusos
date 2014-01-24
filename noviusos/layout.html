@@ -23,6 +23,8 @@
   {% endif %}
 
   {# JS #}
+  {%- block extrahead %} {% endblock %}
+
   {% if not embedded %}
 
     <script type="text/javascript">
@@ -37,10 +39,16 @@
     {%- for scriptfile in script_files %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
     {%- endfor %}
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    {% if not READTHEDOCS %}
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.js"></script>
+        <script type="text/javascript">
+            var $theme = $.noConflict(true);
+        </script>
+    {%- else %}
     <script type="text/javascript">
-        $19 = $.noConflict(true);
+        var $theme = $;
     </script>
+    {% endif %}
 
     {% if use_opensearch %}
     <link rel="search" type="application/opensearchdescription+xml" title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}" href="{{ pathto('_static/opensearch.xml', 1) }}"/>
@@ -54,10 +62,6 @@
     <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
   {% endfor %}
     <link rel="stylesheet" href="http://www.novius-os.org/static/commonbar/header_external.min.css" type="text/css" />
-
-  {%- if theme_canonical_url %}
-    <link rel="canonical" href="{{ theme_canonical_url }}{{ pagename }}.html"/>
-  {%- endif %}
 
   {%- block linktags %}
     {%- if hasdoc('about') %}
@@ -83,9 +87,6 @@
     <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />
     {%- endif %}
   {%- endblock %}
-  {%- block extrahead %} {% endblock %}
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 <body>
@@ -106,7 +107,9 @@
     </div>
     {%- endblock %}
 
-    {% include "versions.html" %}
+    {% if READTHEDOCS %}
+        {% include "versions.html" %}
+    {% endif %}
 
     {% include "sidebar.html" %}
 
@@ -125,7 +128,7 @@
             {{ theme_commonbar_switch }} : "{{ theme_commonbar_switch_url }}"
         }
         {%- endif %}
-    }, $19);
+    }, $theme);
 </script>
 </body>
 </html>

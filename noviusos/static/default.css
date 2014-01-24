@@ -885,23 +885,24 @@ p {
 
 
 .rst-versions {
-    position: absolute !important;
-    width: 16em !important;
-    background: #2D2D2D !important;
+    position: absolute;
+    width: 16em;
+    background: #2D2D2D;
+    border-top: 0;
 }
 
 .rst-versions a {
-    color: #444444 !important;
-    border-bottom:0 !important;
+    color: #444444;
+    border-bottom:0;
 }
 
 .rst-versions .rst-current-version {
-    background-color: #2D2D2D !important;
+    background-color: #2D2D2D;
 }
 
 .rst-versions.shift .rst-other-versions {
     display: block;
-    background: #E5E5E5 !important;
+    background: #E5E5E5;
 }
 
 .rst-versions .rst-other-versions dd a {
