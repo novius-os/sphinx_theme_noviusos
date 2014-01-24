@@ -1,4 +1,4 @@
-.document > .rst-versions {
+.rst-versions {
     position: absolute;
     width: 16em;
     background: #2D2D2D;
@@ -14,7 +14,7 @@
     background-color: #2D2D2D;
 }
 
-.rst-versions.shift .rst-other-versions {
+.rst-versions.shift-up .rst-other-versions {
     display: block;
     background: #E5E5E5;
 }
@@ -24,11 +24,11 @@
     padding: 6px;
 }
 
-.rst-versions.rst-badge.shift .rst-current-version {
+.rst-versions.rst-badge.shift-up .rst-current-version {
     text-align: right
 }
 
-.rst-versions.rst-badge.shift .rst-current-version .icon-book {
+.rst-versions.rst-badge.shift-up .rst-current-version .icon-book {
     float: left
 }
 
