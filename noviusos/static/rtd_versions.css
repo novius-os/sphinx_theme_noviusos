@@ -36,3 +36,11 @@
     font-style: normal;
 }
 
+.rst-versions.rst-badge {
+    bottom: 0;
+    max-width: none;
+    right: 0;
+}
+.rst-versions .rst-other-versions dd a {
+    color: #444444;
+}
