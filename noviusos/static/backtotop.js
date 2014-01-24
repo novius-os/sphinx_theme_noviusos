@@ -35,9 +35,3 @@ function init_back2top() {
     });
     $(window).trigger('scroll');
 }
-
-if (typeof READTHEDOCS_DATA != 'undefined') {
-    $('.related select option[value="' + READTHEDOCS_DATA.version + '"]').each(function() {
-        this.selected = true;
-    });
-}
