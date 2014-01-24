@@ -6,7 +6,7 @@
             <select>
                 {% if versions %}
                 {% for slug, url in versions %}
-                <option value="{{ url }}">{{ slug }}</option>
+                <option value="{{ url }}" {% if current_version == slug %}selected{% endif %}">{{ slug }}</option>
                 {% endfor %}
                 {% else %}
                 <option value="">{{ version }}</option>
