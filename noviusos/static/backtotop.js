@@ -6,6 +6,10 @@
         $('.related select').change(function() {
             document.location.href = $(this).find(':selected').val();
         });
+
+        $("[data-toggle='rst-current-version']").click(function() {
+            $("[data-toggle='rst-versions']").toggleClass("shift");
+        });
     });
     function init_back2top() {
         var $back2top = $('<div><div></div></div>').css({

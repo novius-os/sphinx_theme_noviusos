@@ -110,16 +110,14 @@
     </div>
     {%- endblock %}
 
+    {% include "versions.html" %}
+
     {% include "sidebar.html" %}
+
     <div class="clearer"></div>
 </div>
 
 {% include "header.html" %}
-
-{% if READTHEDOCS %}
-  {% include "footer.html" %}
-  {% include "versions.html" %}
-{% endif %}
 
 <script type="text/javascript" src="{{ pathto('_static/backtotop.js', 1) }}"></script>
 <script type="text/javascript" src="http://www.novius-os.org/static/commonbar/header_external.min.js"></script>
