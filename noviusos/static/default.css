@@ -241,12 +241,9 @@ div.related ul li.noviusos {
 }
 
 div.related ul li.noviusos a {
-    background: url(noviusos.png) no-repeat;
-    padding : 0 0 0 187px;
+    padding : 0;
     margin: 0;
     display: inline-block;
-    height: 49px;
-    line-height: 49px;
     font-size: 1.2em;
 }
 
